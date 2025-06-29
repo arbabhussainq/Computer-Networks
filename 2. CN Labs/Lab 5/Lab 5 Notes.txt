@@ -1,0 +1,63 @@
+->Switches:
+	Switch CLI
+	->Connect one PC with console - RS 32
+	->One with straight through ethernet
+Cisco Networking Devices use iOS (Inter Operating Networking System)
+	switch > => User EXE Mode
+
+	->go to switch CLI
+Commands:
+	1. show ? -> Shows all available commands (user exe mode)
+	2. enable or en -> It will enable privilege exe mode denoted by switch#
+		Limited commands can run in privilege exe mode
+	3. config t or configure terminal -> will enable global configuration mode
+		will show switch(config)
+
+	4. exit -> to go from global configuration mode to privileges mode
+	5. disable -> from privileges mode to user exe mode
+
+
+
+
+	For remote accessing the switch: We use telnet
+	or we can directly configure switch by using iOS global configuration mode via ethernet cable.
+
+
+	Steps:
+		->Assign ip address to pcs
+		->Assign hostname to switch
+					->hostname 22sw028
+		->Assign Password to switch
+					->enable secret password:
+			Now whenever someone wants to use our switch, he will have to give the password.
+		->Assigning Password to Telnet.
+					->Line vty 0 15 -> Means 1 to 15 connections can remotely access it.
+					->password yourpassword
+					->login
+
+
+		->After that, come back to user privileges mode, then type
+		show running-config:
+					It will show all configurations
+		Password of CLI would be encrypted, but password of telnet won't be encrypted.
+		->To encrypt the telnet password, use command
+					->service password-encryption:
+								This command will encrypt the password of telnet too.
+								This will encrypt all further passwords too.
+
+		->Configuring Switch:
+					->interface vlan 1 (will change to (config-if)
+		->To assign IP address:
+					->ip address address subnet mask
+					->ip address 192.168.0.20 255.255.255.0
+		->no shutdown: will make sure that the switch is up
+	->Configuring Default Gateway of Switch:
+					switch(config-if)#exit
+					switch(config)#ip default-gateway 192.168.0.254
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------	
+
+	Now to access the switch from command line of any computer:
+	->type telnet ipaddressofswitch
+	telnet 192.168.0.20:  It will give access to the switch remotely
+	->enable
+	->config t
