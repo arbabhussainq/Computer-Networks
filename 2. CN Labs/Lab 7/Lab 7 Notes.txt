@@ -1,0 +1,79 @@
+=>ROUTING:
+			Selects the best path for data packets
+	Types:
+			Static: Admin sets static routing protocols
+				->Commands:
+					ip route(destination network address)(subnet mask)(outgoing interface)
+			Default: Similar to static, used when we don't know the destination
+			Dynamic: Works with multiple routing protocols and automatically selects the path.
+					->Two Protocols of Dynamic Routing
+							. Routing Protocols 
+									--IGP (Interior Gateway Protocol):
+											-Distance Vector Routing Protocol
+													Uses hop count to select the shortest distance.
+											-Link State Routing Protocol
+													Checks which path will have more resources which will make it easy 													to route. Keeps a database of all the resources in the network.		
+											-Hybrid Routing Protocol
+													Combination of Both Distance and Linkstate....
+									--EGP (Exterior Gateway Protocol)
+											-BGP
+							. Routed Protocols(IP1 | IPx)
+=>Autonomous System:
+	It is a network or a collection of networks that are all managed and supervised by a single entity or an organisation.
+
+	CROSS OVER WIRE: For connecting similar network devices
+	STRAIGHT THROUGH WIRE: For connecting different network devices
+=>How to do STATIC ROUTING:
+	Two different Networks connected to each other.
+	LAN: Fast ethernet connections
+	WAN: Serial Connections
+	
+	(R1 ipAddress: 192.168.10.1)----------------[P1 ipAddress: 192.168.5.3] (Ethernet: 192.168.5.1)
+			|
+	(R2 ipAddress: 192.168.10.2)---------------[P2 ipAddress: 192.168.6.3]  (Ethernet: 192.168.6.1)
+
+	In config terminal mode:
+	ip route network address subnet mask outgoing interface
+		ip route 192.168.6.0 | 255.255.255.0 | 192.168.10.1
+		ip route 192.168.5.0 | 255.255.255.0 | 192.168.10.2
+
+=>How to do DEFAULT ROUTING:
+	Two different Networks connected to each other.
+	LAN: Fast ethernet connections
+	WAN: Serial Connections
+	
+	(R1 ipAddress: 192.168.10.1)----------------[P1 ipAddress: UnKnown] (Ethernet: 192.168.5.1)
+			|
+	(R2 ipAddress: 192.168.10.2)---------------[P2 ipAddress: UnKnown]  (Ethernet: 192.168.6.1)
+
+	In config terminal mode:
+		ip route 0.0.0.0 | 0.0.0.0 | 192.168.10.1
+		ip route 0.0.0.0 | 0.0.0.0 | 192.168.10.2
+
+
+
+=ROUTING WITH 3 ROUTERS:
+
+	(R1 ipAddress: 192.168.10.1)----------------[P1 ipAddress: 192.168.1.2] (Ethernet: 192.168.1.1 | Serial: 192.168.0.1)
+			|
+	(R2 ipAddress: 192.168.10.2)---------------[P2 ipAddress: 192.168.2.2]  (Serial0/192.168.0.2 | Serial 1/172.16.0.1)
+			|
+	(R3 ipAddress: 192.168.10.2)---------------[P3 ipAddress: 192.168.3.2]  (Serial0/172.16.0.2 | Ethernet: 192.168.3.1)
+
+	Static Routing:
+	For Router 1:
+	R1(config)#	ip route 192.168.2.0   255.255.255.0   192.168.0.2
+	R1(config)#	ip route 172.16.0.0     255.255.0.0   192.168.0.2
+	R1(config)#	ip route 192.168.3.0   255.255.255.0   192.168.0.2
+
+	Router2(config)#ip route 192.168.1.0 255.255.255.0 192.168.0.1
+	Router2(config)#ip route 192.168.3.0 255.255.255.0 172.16.0.2
+
+	Router3(config)#ip route 192.168.0.0 255.255.255.0 172.16.0.1
+	Router3(config)#ip route 192.168.1.0 255.255.255.0 172.16.0.1
+	Router3(config)#ip route 192.168.2.0 255.255.255.0 172.16.0.1
+
+
+->CONFIGURING IT IN PACKET TRACER:
+			->NM - 1E -> Ethernet Connection
+			->WC-IT -> Serial Connection (2 Serial connection in 2nd Router)
