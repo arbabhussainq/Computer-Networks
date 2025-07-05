@@ -1,0 +1,14 @@
+=>Configuring RIP Protocol between 3 routers:
+
+R1# router rip
+R1# network 192.168.1.0
+R1# network 192.168.0.0
+
+R2# router rip
+R2# router network 192.168.2.0
+R2# router network 192.168.0.0
+R2# router network 172.16.0.1
+
+R3# router rip
+R3# router network 192.168.3.0
+R2# router network 172.16.0.0
